@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'model/place.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,6 +13,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>  with TickerProviderStateMixin {
+  List<Place> allPlaceList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getAllPlace();
+  }
+
+  Future<void> getAllPlace() async {
+    try {
+      final response = await http.get(Uri.parse("http://192.168.1.12:8080/api/v1/place/getAll"));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = jsonDecode(response.body);
+        allPlaceList = Place.listFromJson(responseData);
+        setState(() {});
+      } else {
+        print('Failed to get place list. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 2, vsync: this);
@@ -131,38 +160,26 @@ class _HomePageState extends State<HomePage>  with TickerProviderStateMixin {
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    GridView.count(
+                      GridView.count(
                       padding: EdgeInsets.all(10),
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
-                      mainAxisSpacing:  10,
-                      children: [
-                        Container(
-                          color: Colors.red,
-                        ),
-                        Container(
-                          color: Colors.red,
-                        ),
-                        Container(
-                          color: Colors.red,
-                        ),
-                        Container(
-                          color: Colors.red,
-                        ),
-                        Container(
-                          color: Colors.red,
-                        ),
-                        Container(
-                          color: Colors.red,
-                        )
-                      ],
+                      mainAxisSpacing: 10,
+                      children: allPlaceList.map((place) {
+                        return Container(
+                          color: Colors.blue,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Display your data here, for example:
+                              Text(place.name ?? "name"),
+                              Image.network(place.image ?? "image"),
+                              Text("Rate: ${place.rate ?? 0}"),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                     ),
-                    // ListView.builder(
-                    //     scrollDirection: Axis.vertical,
-                    //     itemCount: student.length,
-                    //     itemBuilder: (BuildContext context, index) {
-                    //       return Text(student[index]);
-                    //     })
                   ],
                 ),
               )

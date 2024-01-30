@@ -18,7 +18,7 @@ public class PlaceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String description;
-    private Integer rating;
-    private String imageurl;
+    private String image;
+    private Integer rate;
+   
 }

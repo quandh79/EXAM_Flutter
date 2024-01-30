@@ -3,21 +3,19 @@ class Place {
   String? name;
   String? image;
   int? rate;
+
   Place({this.id, this.name, this.image, this.rate});
 
-  factory Place.valueFromJson(Map<String, dynamic> json) {
+  factory Place.fromJson(Map<String, dynamic> json) {
     return Place(
-        id: json["id"] as int,
-        name: json["name"] as String,
-        image: json["address"] as String,
-        rate: json["age"] as int
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      image: json['image'] as String?,
+      rate: json['rate'] as int?,
     );
   }
 
-  @override
-  String toString() {
-    // TODO: implement toString
-    return "id: $id, name: $name, address: $image, age: $rate";
+  static List<Place> listFromJson(List<dynamic> jsonList) {
+    return jsonList.map((json) => Place.fromJson(json)).toList();
   }
-
 }

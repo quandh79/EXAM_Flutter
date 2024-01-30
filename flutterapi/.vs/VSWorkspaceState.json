@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\demo",
+    "\\demo\\src",
+    "\\demo\\src\\main",
+    "\\demo\\src\\main\\java",
+    "\\demo\\src\\main\\java\\com",
+    "\\demo\\src\\main\\java\\com\\example",
+    "\\demo\\src\\main\\java\\com\\example\\demo",
+    "\\demo\\src\\main\\java\\com\\example\\demo\\config",
+    "\\demo\\src\\main\\java\\com\\example\\demo\\controller"
+  ],
+  "SelectedNode": "\\demo\\src\\main\\java\\com\\example\\demo\\controller\\PlaceController.java",
+  "PreviewInSolutionExplorer": false
+}
